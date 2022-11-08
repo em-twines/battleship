@@ -23,7 +23,14 @@ class Game_board:
         player_2 = Player("Player_2")
         # player_1.aircraft_carrier = Aircraft_Carrier()
         player_1.define_board()
-        player_1.place_ships_x(player_1.aircraft_carrier)
+        player_1.place_ships(player_1.aircraft_carrier)
+
+        player_1.place_ships(player_1.destroyer)
+
+        player_1.place_ships(player_1.submarine)
+
+        player_1.place_ships(player_1.battleship)
+        print(player_1.current_board)
 
 
 

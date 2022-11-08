@@ -62,25 +62,11 @@ class Player:
 
 
     def place_ships_x(self, ship_instance):
-        # get x-direction starting position
         starting_position_x = randint(1, (self.board_size - ship_instance.size + 1))
         starting_position_y = randint(1, self.board_size)
-
         
-        # gives coordinate to start changing if changing on x axis: 
-        # coordinate_to_begin = self.current_board[starting_position_y][starting_position_y]
         x_span_until = starting_position_x + ship_instance.size
-        # self.current_board[starting_position_y [starting_position_x: x_span_until]] = 1
 
-
-        # x = 0
-        # while x < starting_position_x:
-        #     np.put(self.current_board,(starting_position_y, x), 0)
-        #     x += 1
-        # while starting_position_x < x_span_until:
-            # new_array = print(self.current_board[[starting_position_y, starting_position_x]])
-            # [self.current_board[starting_position_y, starting_position_x] = np.array([starting_position_y, starting_position_x])
-            # np.put(self.current_board, [starting_position_y, starting_position_x], [0, 1])
         for y in range(21):
             for x in range (21):
                 if starting_position_x < x_span_until:
@@ -88,40 +74,33 @@ class Player:
                             self.current_board[y][x] = 1
                             starting_position_x += 1
                     
-
-                
-            # if y > 0:
-            #     if y == starting_position_y:
-            #         self.current_board[y] = 1 
-            #     else: 
-            #         y == 0           
-            # for x in range(21):
-            #     while 1 < x < starting_position_x:
-            #         self.current_board[x] = 0
-            #         x += 1
-            #     while starting_position_x <= x <= x_span_until:
-            #         self.current_board[x] = 1
-            #         x += 1
-            # np.put(self.current_board, [starting_position_y, starting_position_x], 1)
-            # starting_position_x += 1
-        # while starting_position_x <= self.board_size:
-        #     np.put(new_array,(starting_position_y, x), 0)
-        #     starting_position_x += 1
-
-
-        print(self.current_board)
+        # print(self.current_board)
 
 
 
+    def place_ships_y(self, ship_instance):
+        starting_position_y = randint(1, (self.board_size - ship_instance.size + 1))
+        starting_position_x = randint(1, self.board_size)
+        
+        y_span_until = starting_position_y + ship_instance.size
+
+        for y in range(21):
+            for x in range (21):
+                if starting_position_y < y_span_until:
+                    if y == starting_position_y and x == starting_position_x:
+                            self.current_board[y][x] = 1
+                            starting_position_y += 1
+                    
+        # print(self.current_board)
 
 
 
-    def place_ships(self):
+    def place_ships(self, ship):
         deciding_int = randint(0, 1)
         if deciding_int == 0:
-            self.place_ships_x()
+            self.place_ships_x(ship)
         else: 
-            self.place_ships_y()
+            self.place_ships_y(ship)
 
 
 
