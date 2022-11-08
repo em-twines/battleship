@@ -6,5 +6,4 @@ player_1 = Player("Player 1")
 
 game_board = Game_board()
 
-# game_board.run_game()
-player_1.define_board()
+game_board.run_game()
