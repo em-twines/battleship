@@ -72,8 +72,9 @@ class Player:
                 if starting_position_x < x_span_until:
                     if y == starting_position_y and x == starting_position_x:
                             while self.current_board[y][x] != 0:
-                                starting_position_x += 1
-                                if starting_position_x == 21:
+                                self.current_board[y][x] = 1
+                                x += 1
+                                if starting_position_x == 20:
                                     starting_position_x = 1
                             self.current_board[y][x] = 1
                             starting_position_x += 1
@@ -93,8 +94,10 @@ class Player:
                 if starting_position_y < y_span_until:
                     if y == starting_position_y and x == starting_position_x:
                             while self.current_board[y][x] != 0:
-                                starting_position_y+= 1
-                                if starting_position_y == 21:
+                                #added 2 lines below 11/9 to keep table creating (overwriting) lines when they are already filled,
+                                self.current_board[y][x] = 1
+                                y+= 1
+                                if starting_position_y == 20:
                                     starting_position_y = 1
                             self.current_board[y][x] = 1
                             starting_position_y += 1
