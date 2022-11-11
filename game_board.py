@@ -43,7 +43,69 @@ The Submarine is 3.
 The Battleship is 4.
 And the Aircraft Carrier is 5.
 Sink all four ships to win!''')
-        pass
+
+
+
+
+
+    def run_game(self):
+        self.display_welcome()
+        # self.player_1.define_board()
+        # self.player_1.create_and_compare_matrices(self.player_1.destroyer, self.player_1.submarine, self.player_1.battleship, self.player_1.aircraft_carrier, self.player_1.board_e)
+        self.show_board(self.player_1, self.player_2)
+        self.show_board(self.player_2, self.player_1)
+        
+        
+
+
+    def show_board(self, player_1, player_2):
+        print(f'''{player_1.name}, your board is ready. {player_2.name}, please look away. 
+{player_1.name}, press "enter" when you are ready to see your board in secret.''')
+        keyboard.wait("Return")
+        
+        self.player_1.define_board()
+        self.player_1.create_and_compare_matrices(self.player_1.destroyer, self.player_1.submarine, self.player_1.battleship, self.player_1.aircraft_carrier, self.player_1.board_e)
+
+        print("Press 'enter' when you are ready to continue.")
+        keyboard.wait("Return")
+        print('''
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        ''')
+
+
+
+
+
+
+    def display_winner(self):
+        pass 
+
+
+
+
+
+
+
+
 
     def display_current_board(self, player):
         # print(player.current_board)
@@ -51,34 +113,15 @@ Sink all four ships to win!''')
 
 
 
-    def display_ships(self, player, player_2):
-        player.define_board()
-        player.place_ships(player.destroyer)
-        player.place_ships(player.submarine)
-        player.place_ships(player.battleship)
-        player.place_ships(player.aircraft_carrier)
-        
-        input(f'''
-{player.name}, your board is ready. {player_2.name}, please look away. 
 
-{player.name}, press "enter" when you are ready to see your board in secret.''')
-        keyboard.wait("Return")
-        
-        print(player.current_board)
-        print("Press 'enter' when you are ready to continue.")
-        keyboard.wait("Return")
 
+    # def display_ships(self, board_c, board_e, player, player_2):
+    #     player.define_board()
+    #     input(f
+
+        
+       
     
     
-    def run_game(self):
-        self.display_welcome()
-        self.display_ships(self.player_1, self.player_2)
-        self.display_ships(self.player_2, self.player_1)
-
-
-
-    def display_winner(self):
-        pass 
-
 
 

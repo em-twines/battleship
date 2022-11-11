@@ -20,6 +20,15 @@ class Player:
         self.ship_spaces_remaining = int
         self.board_size = 20
 
+        # self.board_a = np.array
+        # self.board_b = np.array
+        # self.board_c = np.array
+        
+        # self.board_d = np.array
+        self.board_e = np.array
+        # self.board_f = np.array
+        # self.board_final = np.array
+
 
    
     def define_board(self):
@@ -69,17 +78,27 @@ class Player:
 
         for y in range(21):
             for x in range (21):
+                # if starting_position_x + x_span_until >= 20:
+                #     starting_position_x = 20 - x_span_until
+                # if starting_position_x + x_span_until :
+                #overlaps with any 1's 
+                # then move over until there are no 1's.
+                # while self.current_board[y][x] == 0:
                 if starting_position_x < x_span_until:
                     if y == starting_position_y and x == starting_position_x:
-                            while self.current_board[y][x] != 0:
-                                self.current_board[y][x] = 1
-                                x += 1
-                                if starting_position_x == 20:
-                                    starting_position_x = 1
-                            self.current_board[y][x] = 1
-                            starting_position_x += 1
+                        # if self.current_board[y][x] != 0:
+                        self.current_board[y][x] = 1
+                        starting_position_x += 1
+                # else:
+                #     self.current_board[y][x] = 0
+                            # elif self.current_board[y][x] != 0:
+                            #     self.current_board[y][x] = 1
+                            #     starting_position_x += 1
+    
+        return self.current_board
+
+                           
                     
-        # print(self.current_board)
 
 
 
@@ -91,30 +110,80 @@ class Player:
 
         for y in range(21):
             for x in range (21):
+                # if starting_position_y + y_span_until >= 20:
+                #     starting_position_y = 20 - y_span_until
+                # while self.current_board[y][x] != 0:
                 if starting_position_y < y_span_until:
                     if y == starting_position_y and x == starting_position_x:
-                            while self.current_board[y][x] != 0:
-                                #added 2 lines below 11/9 to keep table creating (overwriting) lines when they are already filled,
-                                self.current_board[y][x] = 1
-                                y+= 1
-                                if starting_position_y == 20:
-                                    starting_position_y = 1
-                            self.current_board[y][x] = 1
-                            starting_position_y += 1
+                        self.current_board[y][x] = 1
+                        starting_position_y += 1
+                # else: 
+                #     self.current_board[y][x] = 0
+                                # while self.current_board[y][x] != 0:
+                # self.current_board[y][x] = 1
+                # starting_position_y += 1
+                                # x+= 1
+        return self.current_board
+                        
+                                    #need to add here logic to account for if the ship will run half over the border.
+                                    
+                            
 
                     
-        # print(self.current_board)
-
-
 
     def place_ships(self, ship):
         deciding_int = randint(0, 1)
         if deciding_int == 0:
-            self.place_ships_x(ship)
+            result = self.place_ships_x(ship)
+            return result
         else: 
-            self.place_ships_y(ship)
+            result = self.place_ships_y(ship)
+        return result
 
 
+
+
+    def create_and_compare_matrices(self, ship_1, ship_2, ship_3, ship_4, board_e):
+        board_e = np.full((21,21), 10, np.int32)
+        # np.argwhere(board_e < 2).all == False
+        
+        while (np.sum(board_e) != 434):
+            board_e = np.empty(21)
+            board_e = self.place_ships(ship_1)
+            board_e = self.place_ships(ship_2)
+            board_e = self.place_ships(ship_3)
+            board_e = self.place_ships(ship_4)
+            if np.sum(board_e) == 434:
+                print(board_e)
+                return(board_e)
+            # first_comparison = np.intersect1d(board_a, board_b, assume_unique = True, return_indices = True)
+            
+            # board_c = np.add(board_a, board_b)
+            # board_f = np.add(board_d, board_e)
+
+            # board_final = np.add(board_c, board_f)
+            # board_final_count = np.sum(board_final)
+                        
+        
+
+        
+            # if (board_c).any()>=2:
+            #     board_a = self.place_ships(ship_1)
+            #     board_b = self.place_ships(ship_2)
+
+            # # second_comparison = np.intersect1d(board_d, board_e, assume_unique = True, return_indices = True)
+            # else: 
+            
+            # if np.any(board_c >= 2):
+            #     board_d = self.place_ships(ship_3)
+            #     board_e = self.place_ships(ship_4)
+            
+            
+            # final_comparison = np.intersect1d(board_c, board_f, assume_unique = True, return_indices = True)
+         
+    
+        # board_3 = player.place_ships(player.battleship)
+        # board_4 = player.place_ships(player.aircraft_carrier)
 
 
 
