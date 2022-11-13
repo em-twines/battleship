@@ -6,7 +6,7 @@ class Destroyer(Ship):
         self.size = 2
         self.health = 2
         self.location = np.array        
-        self.board = np.zeros((21,21), np.int32)
+        self.new_board = np.zeros((21,21), np.int32)
 
 
         super().__init__("Destroyer")

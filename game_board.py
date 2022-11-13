@@ -12,6 +12,11 @@ class Game_board:
 
 
 
+
+
+
+
+
     def run_game(self):
 
         self.display_welcome()
@@ -26,10 +31,10 @@ class Game_board:
             round += 1
             print(f'Round: {round}')
             
-            
             print(f'''Here is your opponent's board, as you know it, {self.player_1.name}: 
 {turn_hits_1}:''')
             turn_hits_to_add_1 = self.play_turn(self.player_1, board_pl_2)   
+
             turn_hits_1 = np.add(turn_hits_1, turn_hits_to_add_1)
 
             
@@ -39,62 +44,97 @@ class Game_board:
             turn_hits_2 = np.add(turn_hits_2, turn_hits_to_add_2)
            
 
-        if (self.player_1.destroyer.health and self.player_1.submarine.health and self.player_1.battleship.health and self.player_1.aircraft_carrier.health) == 0:
+        if (self.player_1.destroyer.health and self.player_1.submarine.health and self.player_1.battleship.health and self.player_1.aircraft_carrier.health) <= 0:
             print(f'{self.player_2.name} is the winner! Thanks to both our players today and congratulations to {self.player_2.name}')
-        elif (self.player_2.destroyer.health and self.player_2.submarine.health and self.player_2.battleship.health and self.player_2.aircraft_carrier.health) == 0:
+        elif (self.player_2.destroyer.health and self.player_2.submarine.health and self.player_2.battleship.health and self.player_2.aircraft_carrier.health) <= 0:
             print(f'{self.player_1.name} is the winner! Thanks to both our players today and congratulations to {self.player_1.name}')
         else:
             print("It's a tie! Thanks for playing!")
 
 
 
+
+
+
+
+
+
+
+
+
     def play_turn(self, player_1, board):
-        guess_x = input(f'{player_1.name}: choose your coordinate horizontally (1-20), then press "enter":')
-        guess_x = int(guess_x)
-        guess_y = input(f'{player_1.name}: choose your coordinate vertically (1-20), then press "enter":')     
-        guess_y = int(guess_y)
-        turn_board = np.zeros((21,21),np.int32)
-        if board[guess_y][guess_x] == 2:
-            turn_board[guess_y][guess_x] = 2
+        working = False
+        while working == False:
+            guess_x = input(f'{player_1.name}: choose your coordinate horizontally (1-20), then press "enter":')
+            try:
+                guess_x = int(guess_x)
+            except ValueError:
+                print("Oops! I didn't understand that guess!")
+                continue
+            guess_y = input(f'{player_1.name}: choose your coordinate vertically (1-20), then press "enter":')     
+            try:
+                guess_y = int(guess_y)
+            except ValueError:
+                print("Oops! I didn't understand that guess!")
+                continue
+            turn_board = np.zeros((21,21),np.int32)
+            if board[guess_y][guess_x] == 2:
+                if turn_board[guess_y][guess_x] == 1:
+                    print("You already guessed there!")
+                else:
+                    turn_board[guess_y][guess_x] = 2
 
-            print("It's a hit!")
-            time.sleep(1)
-
-            if self.player_1.destroyer.board[guess_y][guess_x] == 2:
-
-                self.player_1.destroyer.health -= 1
-                print(f'Your {self.player_1.destroyer.name} now has {self.player_1.destroyer.health} health left!')
+                print("It's a hit!")
                 time.sleep(1)
-                if self.player_1.destroyer.health == 0:
-                    print(f"You sank my {self.player_1.destroyer.name}!")
 
-            elif self.player_1.submarine.board[guess_y][guess_x] == 2:
-                self.player_1.submarine.health -= 1
-                print(f'Your {self.player_1.submarine.name} now has {self.player_1.submarine.health} health left!')
+                if self.player_1.destroyer.new_board[guess_y][guess_x] == 2:
+
+                    if self.player_1.destroyer.health > 0:
+                        self.player_1.destroyer.health -= 1
+                        print(f"{self.player_2.name}'s 's {self.player_1.destroyer.name} now has {self.player_1.destroyer.health} health left!")
+                        time.sleep(1)
+                        if self.player_1.destroyer.health == 0:
+                            print(f"{self.player_2.name} sank your {self.player_1.destroyer.name}!")
+                    else: print("Splash! It's already sunk!")  
+
+                elif self.player_1.submarine.new_board[guess_y][guess_x] == 2:
+                    if self.player_1.submarine.health > 0:
+                        self.player_1.submarine.health -= 1
+                        print(f"{self.player_2.name}'s {self.player_1.submarine.name} now has {self.player_1.submarine.health} health left!")
+                        time.sleep(1)
+                        if self.player_1.submarine.health == 0:
+                            print(f"{self.player_2.name} sank your {self.player_1.submarine.name}!")
+                    else: print("Splash! It's already sunk!")
+
+                elif self.player_1.battleship.new_board[guess_y][guess_x] == 2:
+                    if self.player_1.battleship.health > 0:
+                        self.player_1.battleship.health -= 1
+                        print(f"{self.player_2.name}'s  {self.player_1.battleship.name} now has {self.player_1.battleship.health} health left!")
+                        time.sleep(1)
+                        if self.player_1.battleship.health == 0:
+                            print(f"{self.player_2.name} sank your {self.player_1.battleship.name}!")
+                    else: 
+                        print("Splash! It's already sunk!")
+            
+                elif self.player_1.aircraft_carrier.new_board[guess_y][guess_x] == 2:
+                    if self.player_1.aircraft_carrier.health > 0:
+                        self.player_1.aircraft_carrier.health -= 1
+                        print(f"{self.player_2.name}'s  {self.player_1.aircraft_carrier.name} now has {self.player_1.aircraft_carrier.health} health left!")
+                        time.sleep(1)
+                        if self.player_1.aircraft_carrier.health == 0:
+                            print(f"{self.player_2.name} sank your {self.player_1.aircraft_carrier.name}!")
+                    else: 
+                        print("Splash! It's already sunk!")
+
+            else: 
+                if turn_board[guess_y][guess_x] == 1:
+                    print("You already guessed there!")
+                else: turn_board[guess_y][guess_x] = 1
+                print("It's a miss!")
                 time.sleep(1)
-                if self.player_1.submarine.health == 0:
-                    print(f"You sank my {self.player_1.submarine.name}!")
-
-            elif self.player_1.battleship.board[guess_y][guess_x] == 2:
-                self.player_1.battleship.health -= 1
-                print(f'Your {self.player_1.battleship.name} now has {self.player_1.battleship.health} health left!')
-                time.sleep(1)
-                if self.player_1.battleship.health == 0:
-                    print(f"You sank my {self.player_1.battleship.name}!")
-
-            elif self.player_1.aircraft_carrier.board[guess_y][guess_x] == 2:
-                self.player_1.aircraft_carrier.health -= 1
-                print(f'Your {self.player_1.aircraft_carrier.name} now has {self.player_1.aircraft_carrier.health} health left!')
-                time.sleep(1)
-                if self.player_1.aircraft_carrier.health == 0:
-                    print(f"You sank my {self.player_1.aircraft_carrier.name}!")
-
-
-        else: 
-            print("It's a miss!")
-            time.sleep(1)
-        return turn_board
-        
+            working = True
+            return turn_board
+            
 
         
 
@@ -150,6 +190,10 @@ Sink all four ships to win!''')
         print('''
         
         
+
+
+
+
         
 
 

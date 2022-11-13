@@ -9,10 +9,3 @@ game_board = Game_board()
 
 game_board.run_game()
 
-
-
-# next steps: 
-    # Get player input of coordinates to attack.
-    # learn how to compare matrices. Blank(b) against player board (a).
-    # if location chosen == 2 in matrix a, show that position as 2 in matrix b.
-    # 

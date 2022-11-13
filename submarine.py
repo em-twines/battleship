@@ -6,7 +6,7 @@ class Submarine(Ship):
         self.size = 3
         self.health = 3
         self.location = np.array
-        self.board = np.zeros((21,21), np.int32)
+        self.new_board = np.zeros((21,21), np.int32)
 
         super().__init__("Submarine")
 
