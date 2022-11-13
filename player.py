@@ -31,17 +31,8 @@ class Player:
 
     def create_and_compare_matrices(self):
         board_e = np.full((21,21), 10, np.float32)
-        # np.argwhere(board_e < 2).all == False
-        
-        # while (np.sum(board_e) != 434):
-            # board_a = np.zeros((21,21), np.int32)
-            # board_b = np.zeros((21,21), np.int32)
-            # board_c = np.zeros((21,21), np.int32)
-            # board_d = np.zeros((21,21), np.int32)
-            # board_e = np.zeros((21,21), np.int32)
+      
         while np.count_nonzero(board_e == 4) != 2:
-            count = np.count_nonzero(board_e == 4)
-            print(count)
             board_a = self.destroyer.place_ships()
             board_b = self.submarine.place_ships()
             board_c = self.battleship.place_ships()

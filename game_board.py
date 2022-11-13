@@ -1,6 +1,6 @@
 import keyboard
 import numpy as np
-
+import time
 from player import Player
 
 
@@ -9,7 +9,6 @@ class Game_board:
     def __init__(self):
         self.player_1 = Player("Player_1")
         self.player_2 = Player("Player_2")
-        name = "Game_Board"
 
 
 
@@ -21,11 +20,9 @@ class Game_board:
         round = 0
         turn_hits_1 = self.create_blank_board()
         turn_hits_2 = self.create_blank_board()
-        # turn_hits_1 = np.zeros((21,21),np.int32)
-        # turn_hits_2 = np.zeros((21,21),np.int32)
-        place_holder = True
-        while place_holder == True:
-        # while (np.sum(turn_hits_1) < 434 ) and (np.sum(turn_hits_2) < 434):
+
+        while (self.player_1.destroyer.health or self.player_1.submarine.health or self.player_1.battleship.health or self.player_1.aircraft_carrier.health > 0) and (self.player_2.destroyer.health or self.player_2.submarine.health or self.player_2.battleship.health or self.player_2.aircraft_carrier.health > 0):
+            
             round += 1
             print(f'Round: {round}')
             
@@ -38,19 +35,19 @@ class Game_board:
             
             print(f'''Here is your opponent's board, as you know it, {self.player_2.name}: 
 {turn_hits_2}:''')
-            turn_hits_to_add_2 = self.play_turn(self.player_2, board_pl_1)   
-
-                 
-            # if turn_hits_to_add_2.all != 0:
-            #     self.take_damage(self.player_2.destroyer, turn_hits_to_add_2)
-            #     self.take_damage(self.player_2.submarine, turn_hits_to_add_2)
-            #     self.take_damage(self.player_2.battleship, turn_hits_to_add_2)
-            #     self.take_damage(self.player_2.aircraft_carrier, turn_hits_to_add_2)
+            turn_hits_to_add_2 = self.play_turn(self.player_2, board_pl_1)            
             turn_hits_2 = np.add(turn_hits_2, turn_hits_to_add_2)
            
 
+        if (self.player_1.destroyer.health and self.player_1.submarine.health and self.player_1.battleship.health and self.player_1.aircraft_carrier.health) == 0:
+            print(f'{self.player_2.name} is the winner! Thanks to both our players today and congratulations to {self.player_2.name}')
+        elif (self.player_2.destroyer.health and self.player_2.submarine.health and self.player_2.battleship.health and self.player_2.aircraft_carrier.health) == 0:
+            print(f'{self.player_1.name} is the winner! Thanks to both our players today and congratulations to {self.player_1.name}')
+        else:
+            print("It's a tie! Thanks for playing!")
 
-# , ship_1, ship_2, ship_3, ship_4
+
+
     def play_turn(self, player_1, board):
         guess_x = input(f'{player_1.name}: choose your coordinate horizontally (1-20), then press "enter":')
         guess_x = int(guess_x)
@@ -59,49 +56,47 @@ class Game_board:
         turn_board = np.zeros((21,21),np.int32)
         if board[guess_y][guess_x] == 2:
             turn_board[guess_y][guess_x] = 2
-            # ship_1_location = ship_1.location
-            # ship_2_location = ship_2.location
-            # ship_3_location = ship_3.location
-            # ship_4_location = ship_4.location
-            
-            if self.player_1.destroyer.board[guess_y][guess_x] == 2:
-            # # on_board = np.argwhere(self.player_1.destroyer.board == 2)        
-            # [guess_y, guess_x] in on_board
-            # if [guess_y, guess_x] in on_board:
-                self.player_1.destroyer.health -= 1
-                print(f'Your {self.player_1.destroyer.name} now has {self.player_1.destroyer.health} health left!')
-
-            elif self.player_1.submarine.board[guess_x][guess_y] == 1:
-                self.player_1.submarine.health -= 1
-                print(f'Your {self.player_1.submarine.name} now has {self.player_1.submarine.health} health left!')
-
-            elif self.player_1.battleship.board[guess_x][guess_y] == 1:
-                self.player_1.battleship.health -= 1
-                print(f'Your {self.player_1.battleship.name} now has {self.player_1.battleship.health} health left!')
-            
-            elif self.player_1.aircraft_carrier.board[guess_x][guess_y] == 1:
-                self.player_1.aircraft_carrier.health -= 1
-                print(f'Your {self.player_1.aircraft_carrier.name} now has {self.player_1.aircraft_carrier.health} health left!')
 
             print("It's a hit!")
+            time.sleep(1)
+
+            if self.player_1.destroyer.board[guess_y][guess_x] == 2:
+
+                self.player_1.destroyer.health -= 1
+                print(f'Your {self.player_1.destroyer.name} now has {self.player_1.destroyer.health} health left!')
+                time.sleep(1)
+                if self.player_1.destroyer.health == 0:
+                    print(f"You sank my {self.player_1.destroyer.name}!")
+
+            elif self.player_1.submarine.board[guess_y][guess_x] == 2:
+                self.player_1.submarine.health -= 1
+                print(f'Your {self.player_1.submarine.name} now has {self.player_1.submarine.health} health left!')
+                time.sleep(1)
+                if self.player_1.submarine.health == 0:
+                    print(f"You sank my {self.player_1.submarine.name}!")
+
+            elif self.player_1.battleship.board[guess_y][guess_x] == 2:
+                self.player_1.battleship.health -= 1
+                print(f'Your {self.player_1.battleship.name} now has {self.player_1.battleship.health} health left!')
+                time.sleep(1)
+                if self.player_1.battleship.health == 0:
+                    print(f"You sank my {self.player_1.battleship.name}!")
+
+            elif self.player_1.aircraft_carrier.board[guess_y][guess_x] == 2:
+                self.player_1.aircraft_carrier.health -= 1
+                print(f'Your {self.player_1.aircraft_carrier.name} now has {self.player_1.aircraft_carrier.health} health left!')
+                time.sleep(1)
+                if self.player_1.aircraft_carrier.health == 0:
+                    print(f"You sank my {self.player_1.aircraft_carrier.name}!")
+
+
         else: 
             print("It's a miss!")
+            time.sleep(1)
         return turn_board
         
 
         
-
-
-    # def take_damage(self, ship, hits_board, guess_x, guess_y):
-    #     # hits_board = hits_board.flatten() 
-    #     # ship_location = ship.location
-    #     # ship_location = ship_location.flatten()
-    #     # hits_board_non_zero = np.nonzero(hits_board) 
-    #     # connection = hits_board_non_zero[0]
-    #     # if ship_location[connection] == 2:
-    #     if ship.location[guess_x][guess_y] == 1
-    #         ship.health -= 1
-    #         print(f'Your {ship.name} now has {ship.health} health left!')
 
 
 
@@ -149,7 +144,6 @@ Sink all four ships to win!''')
 {player_1.name}, press "space" when you are ready to see your board in secret.''')
         keyboard.wait("Space")
         
-        # self.player_1.define_board()
         board = self.player_1.create_and_compare_matrices()
         print('Press "space" when you are ready to continue.')
         keyboard.wait("Space")
@@ -182,9 +176,6 @@ Sink all four ships to win!''')
 
 
 
-
-    def display_winner(self):
-        pass 
 
 
 
