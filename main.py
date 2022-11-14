@@ -7,5 +7,5 @@ player_2 = Player("Player 2")
 
 game_board = Game_board()
 
-game_board.run_game()
+game_board.run_game(player_1, player_2)
 
