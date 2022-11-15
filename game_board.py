@@ -1,15 +1,12 @@
 import keyboard
 import numpy as np
 import time
-from player import Player
 
 
 class Game_board:
 
     def __init__(self):
         name = "Game Board"
-
-
 
 
     def run_game(self, player_1, player_2):
@@ -31,13 +28,16 @@ Round: {round}''')
             turn_hits_2 = self.play_turn(player_2, player_1, turn_hits_2, player_1_board)
 
            
-
         if (player_1.health) <= 0:
             print(f'{player_2.name} is the winner! Thanks to both our players today and congratulations to {player_2.name}!')
         elif (player_2.health) <= 0:
             print(f'{player_1.name} is the winner! Thanks to both our players today and congratulations to {player_1.name}!')
         else:
             print("It's a tie! Thanks for playing!")
+
+
+
+
 
 
 
@@ -70,6 +70,8 @@ Round: {round}''')
 
 
 
+
+
     def input_and_eval_guess(self, player_1, player_2_board):
         working = False
         while working == False:
@@ -79,10 +81,21 @@ Round: {round}''')
             except ValueError:
                 print("Oops! I didn't understand that guess!")
                 continue
+            if 0 <= guess_x <= 21:
+                pass
+            else: 
+                print("Oops! I didn't understand that guess!")
+                continue
+
             guess_y = input(f'{player_1.name}: choose your coordinate vertically (1-20), then press "enter":')     
             try:
                 guess_y = int(guess_y)
             except ValueError:
+                print("Oops! I didn't understand that guess!")
+                continue
+            if 0 <= guess_y <= 21:
+                pass
+            else: 
                 print("Oops! I didn't understand that guess!")
                 continue
             turn_board = np.zeros((21,21),np.int32)
@@ -92,10 +105,15 @@ Round: {round}''')
             else: 
                 turn_board[guess_y][guess_x] = 1
                 print("It's a miss!")
-                time.sleep(1)
             working = True
             return turn_board, guess_y, guess_x
             
+
+
+
+
+
+
 
     def take_damage(self, player_1, player_2, ship):
       
@@ -136,7 +154,7 @@ And the Aircraft Carrier is 5.
 
         print('''
 The first player will make their guess, and if they hit any of the spaces containing an enemy ship, 
-that position will change from "0" to "1." Be the first to sink all 4 ships to win!
+that position will change from "0" to "2." If they miss, that position will change to a "1." Be the first to sink all 4 ships to win!
 
 (Press "space" to continue.)
 ''')
@@ -144,15 +162,21 @@ that position will change from "0" to "1." Be the first to sink all 4 ships to w
 
 
 
+
+
+
     def display_rules(self):
         print('''
 The Destroyer is 2 spaces long.
-The Submarine is 3.
-The Battleship is 4.
-And the Aircraft Carrier is 5.
+The Submarine is 3 spaces long.
+The Battleship is 4 spaces long.
+And the Aircraft Carrier is 5 spaces long.
 Sink all four ships to win!''')
       
         
+
+
+
 
 
     def show_board(self, player_1, player_2):
@@ -221,7 +245,7 @@ Sink all four ships to win!''')
         [17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], dtype = np.float16)
+        [20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], dtype = np.int32)
         return board
 
 
