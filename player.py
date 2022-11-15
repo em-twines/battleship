@@ -4,8 +4,8 @@ from destroyer import Destroyer
 from submarine import Submarine
 from battleship import Battleship
 from aircraft_carrier import Aircraft_Carrier
-
 import numpy as np
+
 large_width = 400
 np.set_printoptions(linewidth=large_width)
 
@@ -20,8 +20,9 @@ class Player:
         self.current_board = []
         self.ship_spaces_remaining = int
         self.board_size = 20
-
         self.board_e = np.array
+        self.health = self.destroyer.health + self.submarine.health + self.battleship.health + self.aircraft_carrier.health
+
   
     
 
